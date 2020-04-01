@@ -1,8 +1,20 @@
 FROM node
+#Recuperation de l'image officiel node comme base
 
-COPY . .
+# Nous créons un répertoire pour contenir le code de l'application dans l'image. Ce sera le répertoire de travail de votre application:
+WORKDIR /usr/src/app
 
+#On copie les fichier dont on a besoin a l'intérieur de notre images
+COPY package*.json ./
+
+#On installe toutes les dépendances
 RUN npm install
 
-CMD ["npm","test"]
+# On récupère notre fichier index.js
+COPY . ./
 
+# On indique au daemon docker que l'on veux lancer notre docker sur le port 80
+#EXPOSE 8082
+
+#On lance la commande npm start pour démarrer notre application node
+CMD [ "npm","start" ]
